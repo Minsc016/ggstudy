@@ -1,0 +1,6 @@
+here is the test file 
+the test file is for 4_1_manual 
+for 4_1_manual look through iterator
+for the first example in that python script
+about manual_iter function
+done

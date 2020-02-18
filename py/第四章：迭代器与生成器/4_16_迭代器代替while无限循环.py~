@@ -1,0 +1,33 @@
+#########################################################################
+# File Name: 4_16_迭代器代替while无限循环.py
+# Author: Crow
+# mail:qnglsk@163.com
+# Created Time: Thu Jan 16 17:03:15 2020
+#########################################################################
+#!/usr/bin/env python3
+
+# while 循环迭代处理数据，
+# 需要调用某个函数或者和一般迭代模式不同的测试条件。
+# 用迭代器重写。
+
+# 一个常见的IO操作程序：
+CHUNKSIZE=8912
+def reader(s):
+    while True:
+        data = s.recv(CHUNKSIZE)
+        if data == b'':
+            break
+        process_data(data)
+
+# 用 iter() 代替
+
+def reader2(s):
+    for chunk in iter(lambda :s.recv(CHUNKSIZE),b''):
+        pass
+        #process_data(data)
+
+# 试验 例子:
+import sys
+f = open('/etc/hosts')
+for chunk in iter(lambda: f.read(10),''):
+    n = sys.stdout.write(chunk)

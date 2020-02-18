@@ -1,0 +1,29 @@
+#########################################################################
+# File Name: 4_15_顺序迭代合并后的排序迭代对象.py
+# Author: Crow
+# mail:qnglsk@163.com
+# Created Time: Thu Jan 16 10:19:45 2020
+#########################################################################
+#!/usr/bin/env python3
+
+# 有一系列排序序列， 现 将它们合并后得到一个排序序列 并在上面迭代遍历。
+# heapq.merge() 函数 
+import heapq
+a = [1,4,7,10]
+b = [2,3,5,6,8,9]
+
+for c in heapq.merge(a,b):
+    print(c)
+
+# heapq.merge 可迭代特性意味着它不会立马读取所有序列。
+# 可以在非常长的序列中使用它，而不会有太大的开销。
+# 如何合并两个排序文件：
+with open('./data415/sorted_file_1','r') as file1,\
+        open('./data415/sorted_file_2','r') as file2,\
+        open('./data415/sorted_file','wt') as outf:
+
+            for line in heapq.merge(file1,file2):
+                outf.write(line)
+
+# heapq.merge()
+
