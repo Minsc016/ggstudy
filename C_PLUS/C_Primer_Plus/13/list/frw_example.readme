@@ -1,0 +1,102 @@
+An fread() and fwrite() Example 
+Let’s use some of these functions in a program that appends the contents from a list of files 
+to the end of another file. One problem is passing the file information to the program. This 
+can be done interactively or by using command-line arguments. We’ll take the first approach, 
+which suggests a plan along the following lines: 
+■   Request a name for the destination file and open it. 
+■   Use a loop to request source files. 
+■   Open each source file in turn in the read mode and add it to the append file. 
+To illustrate setvbuf() , we’ll use it to specify a different buffer size. The next stage of refinement examines opening the append file. We will use the following steps: 
+1.  Open the destination file in the append mode. 
+2.  If this cannot be done, quit. 
+3.  Establish a 4,096-byte buffer for this file. 
+4.  If this cannot be done, quit. 
+Similarly, we can refine the copying portion by doing the following for each file: 
+■   If it is the same as the append file, skip to the next file. 
+■   If it cannot be opened in the read mode, skip to the next file. 
+■   Add the contents of the file to the append file.  
+For a grand finale, the program rewinds the append file to the beginning and displays the 
+contents. 
+For practice, we’ll use fread() and fwrite() for the copying. Listing 13.5 shows the result. 
+
+
+The int feof(FILE *fp) and int ferror(FILE *fp)
+Functions 
+When the standard input functions return EOF , this usually means they have reached the end 
+of a file. However, it can also indicate that a read error has occurred. The feof() and ferror()
+functions enable you to distinguish between the two possibilities. The feof() function returns 
+a nonzero value if the last input call detected the end-of-file, and it returns zero otherwise. The 
+ferror() function returns a nonzero value if a read or write error has occurred, and it returns 
+zero otherwise. 
+
+
+The size_t fread() Function 
+The prototype for fread() is this: 
+size_t fread(void * restrict ptr, size_t size, size_t nmemb,
+FILE * restrict fp); 
+The fread() function takes the same set of arguments that fwrite() does. This time ptr is 
+the address of the memory storage into which file data is read, and fp identifies the file to be 
+read. Use this function to read data that was written to a file using fwrite() . For example, to 
+recover the array of 10 doubles saved in the previous example, use this call:  
+double earnings[10];
+fread(earnings, sizeof (double), 10, fp); 
+This call copies 10 size double values into the earnings array. 
+The fread() function returns the number of items successfully read. Normally, this equals 
+nmemb , but it can be less if there is a read error or if the end-of-file is reached. 
+
+The size_t fwrite() Function 
+The prototype for fwrite() is this: 
+size_t fwrite(const void * restrict ptr, size_t size, size_t nmemb,
+FILE * restrict fp); 
+The fwrite() function writes binary data to a file. The size_t type is defined in terms of the 
+standard C types. It is the type returned by the sizeof operator. Typically, it is unsigned int, 
+but an implementation can choose another type. The pointer ptr is the address of the chunk 
+of data to be written. Also, size represents the size, in bytes, of the chunks to be written, and 
+nmemb represents the number of chunks to be written. As usual, fp identifies the file to be 
+written to. For instance, to save a data object (such as an array) that is 256 bytes in size, you 
+can do this: 
+char buffer[256];
+fwrite(buffer, 256, 1, fp); 
+This call writes one chunk of 256 bytes from buffer to the file. Or, to save an array of 10 
+double values, you can do this: 
+double earnings[10];
+fwrite(earnings, sizeof (double), 10, fp)
+
+
+
+
+The fread() and fwrite() functions are next on the list, but first some background. The 
+standard I/O functions you’ve used to this point are text oriented, dealing with characters and 
+strings. What if you want to save numeric data in a file? True, you can use fprintf() and the 
+%f format to save a floating-point value, but then you are saving it as a sequence of characters. 
+For example, the code 
+double num = 1./3.;
+fprintf(fp,"%f", num); 
+
+
+
+The  int setvbuf() Function 
+The prototype for setvbuf() is this: 
+int setvbuf(FILE * restrict fp, char * restrict buf, int mode, size_t size); 
+The setvbuf() function sets up an alternative buffer to be used by the standard I/O functions. 
+It is called after the file has been opened and before any other operations have been performed 
+on the stream. The pointer fp identifies the stream, and buf points to the storage to be used. 
+If the value of buf is not NULL , you must create the buffer. For instance, you could declare an 
+array of 1,024 char s and pass the address of that array. However, if you use NULL for the value 
+of buf , the function allocates a buffer itself. The size variable tells setvbuf() how big the 
+array is. (The size_t type is a derived integer type; see Chapter 5 , “Operators, Expressions, and 
+Statements.”) The mode is selected from the following choices: _IOFBF means fully buffered 
+(buffer flushed when full), _IOLBF means line-buffered (buffer flushed when full or when a 
+newline is written), and _IONBF means nonbuffered. The function returns zero if successful, 
+nonzero otherwise. 
+Suppose you have a program that works with stored data objects having, say, a size of 3,000 
+bytes each. You could use setvbuf() to create a buffer whose size is a multiple of the data 
+object’s size
+
+The prototype for fflush( ) is this: 
+int fflush(FILE *fp); 
+Calling the fflush() function causes any unwritten data in the output buffer to be sent to the 
+output file identified by fp . This process is called flushing a buffer  . If fp is the null pointer, all 
+output buffers are flushed. The effect of using fflush() on an input stream is undefined. You 
+can use it with an update stream (any of the read-write modes), provided that the most recent 
+operation using the stream was not input.

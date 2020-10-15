@@ -1,0 +1,37 @@
+1.
+1)fopen didn't specific the open-mode 
+2)fputs usage : fputs("", fp)
+3)flose use file-pointer,not file name.
+// stdio.h
+// fp is not a FILE * file pointer
+// the out put need a new line Cause fputs() doesn't add one automatically.
+// fuck.
+
+
+2. 
+paras less than 2 ,then exit.
+open file (file name is the second parameter) to read, if cant open , then exit.
+use a loop to get a single one character in file from the start to the end,
+	if it is a number then display it.
+close file,program excute finished.
+
+3.
+a. fp1 
+b. fp2 ch
+c. ch fp2/stdout
+d. fp1
+
+4.
+Write a program that takes zero command-line arguments or one command-line 
+argument. If there is one argument, it is interpreted as the name of a file. If there is no 
+argument, the standard input ( stdin ) is to be used for input. Assume that the input 
+consists entirely of floating-point numbers. Have the program calculate and report the 
+arithmetic mean (the average) of the input numbers
+
+5.  Write a program that takes two command-line arguments. The first is a character, and 
+the second is a filename. The program should print only those lines in the file containing 
+the given character. 
+Note 
+Lines in a file are identified by a terminating '\n' . Assume that no line is more than 256 characters long. You might want to use fgets(). 
+
+

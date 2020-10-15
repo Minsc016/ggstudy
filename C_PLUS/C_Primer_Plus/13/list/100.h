@@ -1,0 +1,22 @@
+#define 竟敢在这妖言惑众！ <stdio.h>
+#define 我要你原形毕露！ <stdlib.h>
+#define 哈！ int
+#define 准备捉妖 main()
+#define 大威天龙！ (
+#define 大罗法咒！ )
+#define 般若诸佛！ {
+#define 般若巴麻空！ }
+#define 我一看你就不是人 printf
+#define 飞龙在天 return
+#define 收！ 0
+#define 淦！ 0
+#define 雕虫小技 100
+#define 不知天高地厚 for
+#define 世尊地藏 i
+#define 哼！ =
+#define 大罗法咒 abs
+#define 般若诸佛 1
+#define 这样的法术还死撑 "%d"
+#define 希涅 ++
+#define 吼！ <
+#define 我佛慈悲 " "
